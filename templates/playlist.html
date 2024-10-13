@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Download</a> |
+        <a href="/playlist">Playlist</a>
+    </nav>
+
+    <h1>Playlist</h1>
+
+    <h2>Tambahkan ke Playlist</h2>
+    <form action="/playlist" method="POST">
+        <label for="file">Pilih audio untuk ditambahkan ke playlist:</label>
+        <select id="file" name="file">
+            {% for file in downloaded_files %}
+                <option value="{{ file }}">{{ file }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Tambahkan ke Playlist</button>
+    </form>
+
+    <h2>Playlist Anda</h2>
+    <ul>
+        {% for file in playlist %}
+            <li>
+                {{ file }}
+                <audio controls>
+                    <source src="{{ url_for('static', filename='downloaded_files/' + file) }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
